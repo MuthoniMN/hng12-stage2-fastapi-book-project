@@ -21,4 +21,4 @@ COPY nginx.conf /etc/nginx/sites-available/default
 EXPOSE 80
 
 # Start NGINX and the FastAPI app using Uvicorn
-CMD service nginx start && uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
+CMD service nginx start && uvicorn main:app --host 0.0.0.0 --port 8000 --reload
