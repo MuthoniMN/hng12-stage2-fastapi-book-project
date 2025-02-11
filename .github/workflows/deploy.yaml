@@ -14,6 +14,6 @@ jobs:
     steps: 
       - name: Deploy to Render
         run: |
-          curl -X POST "${{ secrets.RENDEY_DEPLOY_HOOK }}"
+          curl -X POST "https://api.render.com/deploy/srv-culc7vin91rc73ea35j0?key=vqis0i0eWyE"
 
 
