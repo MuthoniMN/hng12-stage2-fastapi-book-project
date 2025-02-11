@@ -30,6 +30,13 @@ db.books = {
         publication_year=1955,
         genre=Genre.FANTASY,
     ),
+    4: Book(
+        id=4,
+        title="The Name pf the Wind",
+        author="Patrick Rothfuss",
+        publication_year=2007,
+        genre=Genre.FANTASY,
+    ),
 }
 
 
