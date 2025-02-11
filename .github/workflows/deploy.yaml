@@ -1,0 +1,19 @@
+name: Deploying FastAPI Book API
+
+on:
+  pull_request:
+    types:
+      - closed
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    if: github.event.pull_request.merged == true
+    steps: 
+      - name: Deploy to Render
+        run: |
+          curl -X POST "${{ secrets.RENDEY_DEPLOY_HOOK }}"
+
+
