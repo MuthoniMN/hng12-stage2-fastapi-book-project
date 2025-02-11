@@ -15,5 +15,7 @@ jobs:
       - name: Deploy to Render
         run: |
           curl -X POST "https://api.render.com/deploy/srv-culc7vin91rc73ea35j0?key=vqis0i0eWyE"
-
+  
+      - name: Ensure Workflow Completes
+        run: exit 0
 
