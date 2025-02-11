@@ -9,12 +9,11 @@ on:
 
 jobs:
   deploy:
-    if_merged:
-      if: github.event.pull_request.merged == true
-      runs-on: ubuntu-latest
-      steps: 
-        - name: Deploy to Render
-          run: |
-            curl -X POST "${{ secrets.RENDEY_DEPLOY_HOOK }}"
+    runs-on: ubuntu-latest
+    if: github.event.pull_request.merged == true
+    steps: 
+      - name: Deploy to Render
+        run: |
+          curl -X POST "${{ secrets.RENDEY_DEPLOY_HOOK }}"
 
 
