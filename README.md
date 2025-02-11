@@ -129,6 +129,15 @@ The API includes proper error handling for:
 - Invalid genre types
 - Malformed requests
 
+## Deployment Instructions on Render
+
+1. Create a repository for your application(if you don't have one)
+2. Visit (render.com)[render.com] and create/login to your account
+3. Create a new service. Ensure you choose a web service
+4. Link to your GitHub repo
+5. Deploy with the auto-populated settings
+6. Visit your deployed url to ensure everything works as expected
+
 ## Contributing
 
 1. Fork the repository
