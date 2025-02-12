@@ -1,9 +1,7 @@
 name: Deploying FastAPI Book API
 
 on:
-  pull_request:
-    types:
-      - closed
+  push:
     branches:
       - main
 
@@ -11,13 +9,13 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps: 
-      - name: Check if PR was merged
-        id: check_merged
-        run: |
-          if [ "${{ github.event.pull_request.merged }}" != "true" ]; then
-            echo "Pull request was not merged. Exiting."
-            exit 1
-          fi
+      # - name: Check if PR was merged
+      #   id: check_merged
+      #   run: |
+      #     if [ "${{ github.event.pull_request.merged }}" != "true" ]; then
+      #       echo "Pull request was not merged. Exiting."
+      #       exit 1
+      #     fi
 
       - name: Deploy to Render
         run: |
