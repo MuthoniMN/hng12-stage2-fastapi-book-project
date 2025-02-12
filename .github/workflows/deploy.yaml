@@ -33,7 +33,7 @@ jobs:
               echo $status_response
             status=$(echo $status_response | jq -r '.status')
             echo "Current status: $status"
-            if [[ "$status" == "succeeded" || "$status" == "failed" ]]; then
+            if [[ "$status" == "live"]]; then
               echo "Deployment completed with status: $status"
               break
             fi
