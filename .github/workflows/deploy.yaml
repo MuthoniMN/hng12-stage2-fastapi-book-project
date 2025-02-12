@@ -15,11 +15,12 @@ jobs:
       - name: Trigger Render Deployment
         id: trigger_deployment
         run: |
-          response=$(curl -X POST "https://api.render.com/v1/deploys/YOUR_SERVICE_ID" \
+          response=$(curl -X POST "${{ secrets.RENDER_DEPLOY_HOOK }}" \
             -H "Authorization: Bearer ${{ secrets.RENDER_API_KEY }}" \
             -H "Content-Type: application/json")
-          echo "response=$response" >> $GITHUB_ENV
-          echo "deployment_id=$(echo $response | jq -r '.id')" >> $GITHUB_ENV
+          deployment_id=$(echo $response | jq -r '.deploy.id')
+          echo "deployment_id=$deployment_id" >> $GITHUB_ENV
+          echo "Deployment triggered with ID: $deployment_id"
 
       - name: Wait for Deployment to Complete
         run: |
