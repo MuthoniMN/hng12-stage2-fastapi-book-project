@@ -30,6 +30,7 @@ jobs:
             status_response=$(curl -X GET "https://api.render.com/v1/services/${{ secrets.RENDER_SERVICE_ID }}deploys/$deployment_id" \
               -H "Authorization: Bearer ${{ secrets.RENDER_API_KEY }}" \
               -H "Content-Type: application/json")
+              echo $status_response
             status=$(echo $status_response | jq -r '.status')
             echo "Current status: $status"
             if [[ "$status" == "succeeded" || "$status" == "failed" ]]; then
