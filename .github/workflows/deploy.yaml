@@ -27,7 +27,7 @@ jobs:
           deployment_id=${{ env.deployment_id }}
           echo "Waiting for deployment $deployment_id to complete..."
           while true; do
-            status_response=$(curl -X GET "https://api.render.com/v1/deployments/$deployment_id" \
+            status_response=$(curl -X GET "https://api.render.com/v1/services/${{ secrets.RENDER_SERVICE_ID }}deploys/$deployment_id" \
               -H "Authorization: Bearer ${{ secrets.RENDER_API_KEY }}" \
               -H "Content-Type: application/json")
             status=$(echo $status_response | jq -r '.status')
