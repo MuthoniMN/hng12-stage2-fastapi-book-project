@@ -36,6 +36,7 @@ jobs:
             if [[ "$status" == "build_failed" || "$status" == "update_failed" || "$status" == "pre_deploy_failed" ]]; then
               echo "Deployment completed with status: $status"
               exit 1
+            fi
             if [[ "$status" == "live" ]]; then
               echo "Deployment completed with status: $status"
               break
