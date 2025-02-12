@@ -10,12 +10,18 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    if: github.event.pull_request.merged == true
     steps: 
+      - name: Check if PR was merged
+        id: check_merged
+        run: |
+          if [ "${{ github.event.pull_request.merged }}" != "true" ]; then
+            echo "Pull request was not merged. Exiting."
+            exit 1
+          fi
+
       - name: Deploy to Render
         run: |
           curl -X POST "https://api.render.com/deploy/srv-culc7vin91rc73ea35j0?key=vqis0i0eWyE"
 
       - name: Ensure Workflow Completes
         run: exit 0
-
