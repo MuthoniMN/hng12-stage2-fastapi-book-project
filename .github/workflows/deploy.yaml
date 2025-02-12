@@ -1,4 +1,4 @@
-name: Deploying FastAPI Book API
+name: Deploy to Render
 
 on:
   push:
@@ -8,19 +8,32 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    steps: 
-      # - name: Check if PR was merged
-      #   id: check_merged
-      #   run: |
-      #     if [ "${{ github.event.pull_request.merged }}" != "true" ]; then
-      #       echo "Pull request was not merged. Exiting."
-      #       exit 1
-      #     fi
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
 
-      - name: Deploy to Render
+      - name: Trigger Render Deployment
+        id: trigger_deployment
         run: |
-          curl -X POST "https://api.render.com/deploy/srv-culc7vin91rc73ea35j0?key=vqis0i0eWyE"
-          sleep 15
+          response=$(curl -X POST "https://api.render.com/v1/deploys/YOUR_SERVICE_ID" \
+            -H "Authorization: Bearer ${{ secrets.RENDER_API_KEY }}" \
+            -H "Content-Type: application/json")
+          echo "response=$response" >> $GITHUB_ENV
+          echo "deployment_id=$(echo $response | jq -r '.id')" >> $GITHUB_ENV
 
-      - name: Ensure Workflow Completes
-        run: exit 0
+      - name: Wait for Deployment to Complete
+        run: |
+          deployment_id=${{ env.deployment_id }}
+          echo "Waiting for deployment $deployment_id to complete..."
+          while true; do
+            status_response=$(curl -X GET "https://api.render.com/v1/deployments/$deployment_id" \
+              -H "Authorization: Bearer ${{ secrets.RENDER_API_KEY }}" \
+              -H "Content-Type: application/json")
+            status=$(echo $status_response | jq -r '.status')
+            echo "Current status: $status"
+            if [[ "$status" == "succeeded" || "$status" == "failed" ]]; then
+              echo "Deployment completed with status: $status"
+              break
+            fi
+            sleep 10  # Wait for 10 seconds before checking again
+          done
